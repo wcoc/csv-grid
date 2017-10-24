@@ -55,6 +55,11 @@ class ExportResult extends Object
      * @var boolean whether to always archive result, even if has only single file.
      */
     public $forceArchive = false;
+    /**
+     *
+     * @var boolean enable to write BOM into UTF-8 encoded file to properly display characters in some programs.
+     */
+    public $enableUtfBom = false;
 
     /**
      * @var string temporary files directory name
@@ -131,7 +136,10 @@ class ExportResult extends Object
 
         $file = new CsvFile($config);
         $file->name = $this->getDirName() . DIRECTORY_SEPARATOR . $selfFileName . '.csv';
-
+	if ($this->enableUtfBom === true) {
+            $file->composeUt8Bom();
+        }
+	
         $this->csvFiles[] = $file;
 
         return $file;

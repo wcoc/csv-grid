@@ -86,6 +86,16 @@ class CsvFile extends Object
     }
 
     /**
+     * write BOM into UTF-8 encoded file to properly display characters
+     * @return boolean success.
+     */
+    public function composeUt8Bom()
+    {
+        $this->open();
+        return $this->writeContent(pack("CCC",0xef,0xbb,0xbf));
+    }
+
+    /**
      * Close the related file if it was opened.
      * @return boolean success.
      */
